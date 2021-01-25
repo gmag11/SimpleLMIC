@@ -101,9 +101,13 @@ public:
 	void personalize(const char * devAddr, const char * nwkSKey, const char * appSKey);
 
 	void message(uint8_t *payload, size_t size, uint8_t port);
+    
+    void onJoin (void(*cb)(uint32_t netid, uint32_t devaddr, uint8_t* nwkKey, uint8_t* artKey));
+    void joined (uint32_t netid, uint32_t devaddr, uint8_t* nwkKey, uint8_t* artKey);
 
 private:
 	void (*messageCallback)(uint8_t *payload, size_t size, uint8_t port);
+    void (*nodeJoined)(uint32_t netid, uint32_t devaddr, uint8_t* nwkKey, uint8_t* artKey);
 	void (*sleepCallback)();
 };
 
