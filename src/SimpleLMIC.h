@@ -60,6 +60,7 @@ public:
 	void setAdr(bool adr = true);
 	void setSubBand(uint8_t band = 1);
 	void setError(uint8_t error = 5);
+    void setSF (enum _dr_eu868_t sf);
 
 	bool isBusy();
 	bool isLink();
