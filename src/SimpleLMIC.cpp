@@ -242,7 +242,7 @@ void SimpleLMICClass::onMessage(void (*cb)(uint8_t *payload, size_t size, uint8_
   messageCallback = cb;
 }
 
-void SimpleLMICClass::onJoin (void(*cb)(uint32_t netid, uint32_t devaddr, uint8_t* nwkKey, uint8_t* artKey)) {
+void SimpleLMICClass::onJoin (void(*cb)(uint8_t sf, uint32_t netid, uint32_t devaddr, uint8_t* nwkKey, uint8_t* artKey)) {
     nodeJoined = cb;
 }
 
@@ -299,9 +299,9 @@ void SimpleLMICClass::personalize(const char *_devAddr, const char *_nwkSKey, co
   LMIC_setSession(0x13, LORA_DEVADDR(devAddr), nwkSKey, appSKey);
 }
 
-void SimpleLMICClass::joined (uint32_t netid, uint32_t devaddr, uint8_t* nwkKey, uint8_t* artKey) {
+void SimpleLMICClass::joined (uint8_t sf, uint32_t netid, uint32_t devaddr, uint8_t* nwkKey, uint8_t* artKey) {
     if (nodeJoined){
-        nodeJoined (netid, devaddr, nwkKey, artKey);
+        nodeJoined (sf, netid, devaddr, nwkKey, artKey);
     }
 }
 
@@ -360,7 +360,7 @@ void onEvent(ev_t ev)
     break;
   case EV_JOINED:
       LMIC_getSessionKeys (&netid, &devaddr, nwkKey, artKey);
-      pSimpleLMIC->joined (netid, devaddr, nwkKey, artKey);
+      pSimpleLMIC->joined (LMIC.datarate, netid, devaddr, nwkKey, artKey);
     //LMIC_getSessionKeys(&pSimpleLMIC->NetID, &pSimpleLMIC->DevAddr, pSimpleLMIC->NwkSKey, pSimpleLMIC->AppSKey);
     break;
   case EV_JOIN_FAILED:
